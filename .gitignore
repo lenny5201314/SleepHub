@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 #other
 *.mp3
+*.jpg
