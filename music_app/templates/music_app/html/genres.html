@@ -1,0 +1,1057 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <title>尋找 | SleepHub - Sleep well with music</title>
+  <meta name="description" content="Responsive, Bootstrap, BS4" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <!-- style -->
+  <!-- build:css ../assets/css/site.min.css -->
+  <link rel="stylesheet" href="{% static "libs/slick-carousel/slick/slick.css" %}" type="text/css" />
+  <link rel="stylesheet" href="{% static "libs/slick-carousel/slick/slick-theme.css" %}" type="text/css" />
+  <link rel="stylesheet" href="{% static "assets/css/bootstrap.css" %}" type="text/css" />
+  <link rel="stylesheet" href="{% static "assets/css/theme.css" %}" type="text/css" />
+  <link rel="stylesheet" href="{% static "assets/css/style.css" %}" type="text/css" />
+  <link rel="icon" type="image/logo" href="{% static "assets/img/icon.png" %}" />
+  <!-- fontawesome icon -->
+  <script src="https://kit.fontawesome.com/ac5766236b.js"></script>
+  <!-- endbuild -->
+</head>
+<!--[1] Header 已登入狀態 -->
+<!-- [1-1] Navbar Header logo -->
+<!-- [1-2] Navbar Header collapse 已登入狀態 -->
+<!-- [1-3] 右側 Navbar User dropdown menu -->
+<!-- ####[2] 音樂搜尋及篩選標籤  -->
+<!-- [2-1]音樂篩選 類型篩選器 id="filter-tag" -->
+<!-- [2-2]音樂標籤 標籤篩選器 id="filter-category  {音樂標籤請查看開發文件中的excel音樂資料表}-->
+<!-- #### [3] 音樂搜尋及篩選列表頁面 -->
+<!-- #### [4] 查無搜尋結果-->
+<!-- #### [5] 推薦音樂彈出問卷 psqi睡眠評估量表-->
+
+
+<body class="layout-column bg-dark">
+  <!-- #### [1] Header 已登入狀態 -->
+  <header id="header" class="page-header scroll-header fixed">
+    <div class="navbar navbar-expand-lg">
+
+      <!-- #### [1-1] Navbar Header logo -->
+      <a href="/" class="navbar-brand text-white ">
+        <!--
+                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" fill="#000"></circle>
+                        <circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1"></circle>
+                        <g class="loading-spin" stroke="currentColor" stroke-width="1" style="transform-origin: 12px 12px">
+                            <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
+                        </g>
+                  </svg>
+                  -->
+                <img src="/static/assets/img/logo.png" alt="...">
+        <span class="hidden-folded d-inline l-s-n-1x ">SleepHub</span>
+      </a>
+      <!-- [1-1] Navbar Header logo #### -->
+      <!-- #### [1-2] Navbar Header collapse 已登入狀態 -->
+
+      <div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
+        <!-- #### 左側 Navbar Header 頁籤-->
+        <ul class="navbar-nav" data-nav>
+          <li class="nav-item">
+            <a href="/discover" class="nav-link">
+              <span class="nav-text">探索</span>
+            </a>
+          </li>
+          <!--  // 暫時先不開發 
+                            <li class="nav-item">
+                                <a href="../html/charts.html" class="nav-link">
+                                    <span class="nav-text">熱門</span>
+                                </a>
+                            </li>
+                            暫時先不開發 // -->
+          <li class="nav-item">
+            <a href="/genres" class="nav-link">
+              <span class="nav-text">尋找</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link no-ajax" data-toggle="modal" data-target="#demo-modal-1">
+              <span class="nav-text">推薦音樂</span>
+            </a>
+          </li>
+        </ul>
+        <!-- #### 左側 Navbar Header 頁籤-->
+        <!-- #### 左側 Navbar Header 搜尋-->
+        <form class="input-group m-2 my-lg-0 ">
+          <span class="input-group-prepend">
+            <button type="button" class="btn no-shadow no-bg px-0"><i data-feather="search"></i></button>
+          </span>
+          <input type="text" class="form-control no-border no-shadow no-bg typeahead" placeholder="搜尋..."
+            data-plugin="typeahead">
+        </form>
+        <!-- 左側 Navbar Header 搜尋 ####-->
+
+      </div>
+      <!-- #### 右側 Navbar Header 頁籤-->
+      <ul class="nav navbar-menu order-1 order-lg-2">
+        <li class="nav-item d-none d-sm-block">
+          <a class="nav-link px-2" data-toggle="fullscreen" data-plugin="fullscreen">
+            <i data-feather="maximize"></i>
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link px-2">
+            <i data-feather="upload" class="d-lg-none"></i><span
+              class="btn btn-rounded btn-sm gd-primary text-white d-none d-lg-block">更新睡眠近況</span>
+          </a>
+        </li>
+        <!-- #### [1-3] 右側 Navbar User dropdown menu -->
+        
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a href="#" data-toggle="dropdown" class="nav-link d-flex align-items-center py-0 px-lg-0 px-2 text-color">
+            <span class="avatar w-24"><img src="../static/assets/img/usericon.png" alt="..."></span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right mt-3 animate fadeIn">
+            <!--
+            <a class="dropdown-item" href="../html/artist.detail.html#overview">
+              <span>專屬推薦</span>
+            </a>
+            <a class="dropdown-item" href="../html/artist.detail.html#recently">
+              <span>最近播放</span>
+            </a>
+            <a class="dropdown-item" href="../html/artist.detail.html#liked">
+              <span>我的最愛</span>
+            </a>
+            <a class="dropdown-item" href="../html/artist.detail.html#mysleep">
+              <span>我的睡眠</span>
+            </a>
+            <a class="dropdown-item" href="../html/artist.detail.html#account">
+              <span>個人資料</span>
+            </a>
+          -->
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/signup">登出</a>
+          </div>
+        </li>
+        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link no-ajax" href="/signin">
+                                登入
+                            </a>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <a class="btn btn-rounded btn-sm btn-primary no-ajax" href="/signup">
+                                註冊
+                            </a>
+                        </li>
+                        <!-- Navarbar toggle btn -->
+                        <li class="nav-item d-lg-none">
+                            <a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse">
+                                <i data-feather="menu"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    {% endif %}
+        <!-- [1-3] 右側 Navbar User dropdown menu #### -->
+
+        <!-- Navarbar toggle btn -->
+        <li class="nav-item d-lg-none">
+          <a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse">
+            <i data-feather="menu"></i>
+          </a>
+        </li>
+        
+      </ul>
+      <!-- 右側 Navbar Header 頁籤 #### -->
+    </div>
+  </header>
+  <div id="main" class="layout-row flex">
+    <!-- ############ Content START-->
+    <div id="content" class="flex ">
+      <!-- ############ Main START-->
+      <div>
+        <div class="page-content page-container" id="page-content">
+          <div class="padding sr" id="list" data-plugin="list">
+            <div class="pos-rlt">
+              <!-- ####[2] 音樂搜尋及篩選標籤   -->
+              <div class="py-5">
+                <div class="heading pt-5 pb-3 d-flex ">
+                  <div>
+                    <div class="text-muted sr-item"></div>
+                    <h5 class="text-highlight sr-item">篩選音樂</h5>
+                  </div>
+                  <span class="flex"></span>
+                </div>
+                <!-- [2-1]音樂篩選 類型篩選器 id="filter-tag" -->
+                <div class="py-2 d-flex sr-item" id="filter-tag">
+                  <div class="no-shrink my-2">類型</div>
+                  <div class="mx-3">
+                    <a href="#" class="btn btn-sm btn-white m-1">所有類型</a>
+                    <a href="#" class="btn btn-sm btn-white m-1">自然</a>
+                    <a href="#" class="btn btn-sm btn-white m-1">動物</a>
+                    <a href="#" class="btn btn-sm btn-white m-1">人</a>
+                    <a href="#" class="btn btn-sm btn-white m-1">室內</a>
+                    <a href="#" class="btn btn-sm btn-white m-1">旋律</a>
+                    <a href="#" class="btn btn-sm btn-white m-1">技術</a>
+
+                  </div>
+                </div>
+                <!-- [2-2]音樂標籤 標籤篩選器 id="filter-category  {音樂標籤請查看開發文件中的excel音樂資料表}-->
+                <!--
+                <div class="py-2 d-flex sr-item" id="filter-category">
+                  <div class="no-shrink my-2">標籤</div>
+                  <div class="mx-3">
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      所有標籤
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Acoustic
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Ambient
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Blues
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Classical
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Country
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Electronic
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Emo
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Folk
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Hardcore
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Hip-Hop
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Indie
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Jazz
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Latin
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Metal
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Pop
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Pop punk
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Punk
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Reggae
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      R&B
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Rock
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      Soul
+                    </a>
+                    <a href="#" class="btn btn-sm btn-white m-1">
+                      World
+                    </a>
+                  </div>
+                </div>
+                -->
+              </div>
+              <!--[3] 音樂搜尋及篩選標籤 ####  -->
+              <!-- #### [3] 音樂搜尋及篩選列表頁面 -->
+              <div class="row row-lg list hide">
+                {% for post in post_music %}
+                <!--單一音樂結果 data-id="[音樂編號]" data-category="[音樂標籤]" data-tag="[音樂類型]" data-source="[音樂檔案]" -->
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-id="{{ post.musicid }}" data-category="R&amp;B"
+                  data-tag="所有類型;{{ post.musiccategory}}" data-source="/static/{{ post.music }}">
+                  <div class="list-item list-hover r mb-5">
+                    <div class="media ">
+                      <!--單一音樂結果 聲音背景圖與播放連結-->
+                      <a href="/item.detail/{{post.musicid}}" class="ajax media-content "
+                        style="background-image:url(/static/{{ post.music_pic }})">
+                      </a>
+                      <div class="media-action media-action-overlay">
+                        <!--單一音樂結果 我的最愛按鈕-->
+                        <button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class>
+                          <i data-feather="heart" class="active-fill"></i>
+                        </button>
+                        <!--單一音樂結果 播放按鈕-->
+                        <button id="send" class="btn btn-raised btn-icon btn-rounded bg--white btn-play"
+                          onclick="add_impression($(this))" value="{{ post.musicid }}"></button>
+                        <li hidden id="userid" value="{{ user.id }}"></li>
+                        <li hidden id="music_id" value="{{ post.musicid }}"></li>
+                        <li hidden id="session_id" value="{{ session_id }}"></li>
+                        <!--單一音樂結果 功能清單-->
+                        <button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown">
+                          <i data-feather="more-horizontal"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right"></div>
+                      </div>
+                    </div>
+                    <div class="list-content text-center">
+                      <div class="list-body ">
+                        <!--單一音樂結果 聲音名稱-->
+                        <a href="/item.detail/{{post.musicid}}" class="list-title title ajax h-1x">
+                          {{post.title}}
+                        </a>
+                        <!--單一音樂結果 聲音分類-->
+                        <a href="artist.detail.html#439309038"
+                          class="list-subtitle d-block text-muted h-1x subtitle ajax ">
+                          {{post.description}}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+              </div>
+              <!-- [3] 音樂搜尋及篩選列表頁面 #### -->
+              <!-- #### [4] 查無搜尋結果-->
+              <div class="no-result hide">
+                <div class="p-5 text-center">
+                  <h5>Sorry 我們沒有找到任何你想要聽的音樂</h5>
+                  <small>告訴我們你相聽怎麼樣的音樂吧！<a href="mailto:sleephub.ncku@gmail.com">留言給我們</a></small>
+                </div>
+              </div>
+              <!--[4] 查無搜尋結果 #### -->
+              <div class="d-flex py-3 justify-content-center">
+                <ul class="pagination pagination-sm"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ############ Main END-->
+    </div>
+    <!-- ############ Content END-->
+  </div>
+
+  <!--footer-->
+  <footer id="footer" class="page-footer">
+    <div class="padding bg-dark  b-t footer-in-phone">
+      <div class="page-container">
+        <div class="py-5 text-inherit text-hover-primary">
+          <div class="row mb-5">
+            <div class="col-6 col-md-4">
+              <div class="mb-3">
+                <!-- brand -->
+                <a href="/" class="navbar-brand text-white ">
+                  <!--
+                                        <svg width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" fill="#000"></circle>
+                                            <circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1"></circle>
+                                            <g class="loading-spin" stroke="currentColor" stroke-width="1" style="transform-origin: 12px 12px">
+                                                <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
+                                            </g>
+                                        </svg>
+                                        -->
+                                        <img src="../static/assets/img/logo.png" alt="...">
+                  <span class="hidden-folded d-inline l-s-n-1x ">SleepHub</span>
+                </a>
+                <!-- / brand -->
+              </div>
+              <div class="px-1">
+                <div class="dropdown mt-5 ml-md-5">
+                  <button class="btn w-sm btn-dark text-align-auto b-a sorting" data-toggle="dropdown">繁體中文</button>
+                  <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item">繁體中文</a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <h5 class="mb-3 text-muted">發現</h5>
+              <ul class="list-unstyled l-h-2x text-highlight">
+
+                <li>
+                  <a href="/genres">尋找</a>
+                </li>
+                <li>
+                  <a href="#">推薦音樂</a>
+                </li>
+
+                <li>
+                  <a href="">通知</a>
+                </li>
+                <li>
+                  <a href="/signup">註冊</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-6 col-md-2">
+              <h5 class="mb-3 text-muted">政策</h5>
+              <ul class="list-unstyled l-h-2x text-highlight">
+                <li>
+                  <a href="#">問題協助</a>
+                </li>
+                <li>
+                  <a href="#">服務條款</a>
+                </li>
+                <li>
+                  <a href="#">隱私權</a>
+                </li>
+
+              </ul>
+            </div>
+            <div class="col-6 col-md-2">
+              <h5 class="mb-3 text-muted">關於</h5>
+              <ul class="list-unstyled l-h-2x text-highlight">
+                <li>
+                  <a href="../html/page.about.html">關於我們</a>
+                </li>
+                <li>
+                  <a href="../html/blog.html">部落格</a>
+                </li>
+                <li>
+                  <a href="../docs">Documentation</a>
+                </li>
+
+                <li>
+                  <a href="../docs/changelog.html">Update</a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+          <div class="text-center py-5">
+            <span class="text-muted text-sm">&copy; Copyright. SleepHub - Sleep well with music, All rights
+              reserved.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-plugin="plyr" class="plyrist plyrist_audio plyr-list-popup player bg-overlay b-t fixed-bottom"
+      id="plyrist">
+      <audio controls hidden></audio>
+      <div class="plyr-list bg-dark-overlay" style="display:none">
+      </div>
+    </div>
+  </footer>
+
+  <!-- #### [5] 推薦音樂彈出問卷 psqi睡眠評估量表-->
+  <form class="modal multi-step" id="demo-modal-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color:#fff">
+        <div class="modal-header">
+          <h4 class="modal-title text-black-50 step-1" data-step="1"></h4>
+          <h4 class="modal-title text-black-50 step-2" data-step="2">問卷說明</h4>
+          <h4 class="modal-title text-black-50 step-3" data-step="3">1.</h4>
+          <h4 class="modal-title text-black-50 step-4" data-step="4">2.</h4>
+          <h4 class="modal-title text-black-50 step-5" data-step="5">3.</h4>
+          <h4 class="modal-title text-black-50 step-6" data-step="6"></h4>
+          <button type="button" class="close" style="color: #333333" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+        </div>
+        <div class="modal-body text-black-50 step-1" data-step="1">
+          <div style="text-align: center">
+            <h3>快速檢測睡眠，找到適合自己的音樂</h3>
+            <p>完成問卷，SleepHub AI 將會推薦最適合的睡眠音樂給您</p>
+          </div>
+        </div>
+        <div class="modal-body text-black-50 step-2" data-step="2">
+          <div style="text-align: center">
+
+            <h4>本問卷使用批匹茲堡睡眠品質量表</h4>
+            <h6>下列問題是要調查您過去”這一個月“的睡眠<br>習慣，請您以平均狀況回答。</h6>
+            <p>點選“開始”，即表示同意 隱私條款</p>
+          </div>
+        </div>
+        <div class="modal-body text-black-50 step-3" data-step="3">
+          <div>
+            <h6 style="text-align: left">1-1.過去一個月來，您晚上通常幾點何時上床？</h6>
+
+            <div class="form-group row">
+              <label for="example-time-input" class="col-form-label"></label>
+              <div class="col-10">
+                <input class="form-control" type="time" value="22:30:00" id="example-time-input">
+              </div>
+            </div>
+
+            <h6 style="text-align: left">1-2.過去一個月來，您在上床後，通常躺多久才能日入睡？</h6>
+
+
+            <div class="input-group mb-3">
+
+              <select class="custom-select" id="inputGroupSelect02">
+                <option>10</option>
+                <option>15</option>
+                <option>20</option>
+                <option>25</option>
+                <option>30</option>
+                <option>35</option>
+                <option>40</option>
+                <option>45</option>
+                <option>50</option>
+                <option>55</option>
+              </select>
+              <div class="input-group-append">
+                <label class="input-group-text" for="inputGroupSelect02">分鐘</label>
+              </div>
+            </div>
+
+
+
+
+            <h6 style="text-align: left">1-3.過去一個月來，您早上通常幾點起床？</h6>
+
+            <div class="form-group row ">
+              <label for="example-time-input" class="col-form-label"></label>
+              <div class="col-10">
+                <input class="form-control" type="time" value="07:30:00" id="example-time-input">
+              </div>
+            </div>
+            <h6 style="text-align: left">1-4.過去一個月來，您每天晚上真正睡著的時間約多少？</h6>
+
+            <form class="form-inline">
+              <div class="input-group mb-3">
+                <select class="custom-select" id="inputGroupSelect01">
+                  <option>不到 1</option>
+                  <option>1 </option>
+                  <option>2 </option>
+                  <option>3 </option>
+                  <option>4 </option>
+                  <option>5 </option>
+                  <option>6 </option>
+                  <option>7 </option>
+                  <option>8 </option>
+                  <option>9 </option>
+                  <option>10 </option>
+                  <option>11 </option>
+                  <option>12 </option>
+                  <option>13 </option>
+                  <option>14 </option>
+                  <option>15 </option>
+                  <option>大於 16</option>
+
+                </select>
+                <div class="input-group-append">
+                  <label class="input-group-text" for="inputGroupSelect01">小時</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect02">
+                  <option>10</option>
+                  <option>20</option>
+                  <option>30</option>
+                  <option>40</option>
+                  <option>50</option>
+                </select>
+                <div class="input-group-append">
+                  <label class="input-group-text" for="inputGroupSelect02">分鐘</label>
+                </div>
+              </div>
+
+
+            </form>
+          </div>
+
+
+        </div>
+        <div class="modal-body text-black-50 step-4" data-step="4">
+          <h6 style="text-align: left">2-1.無法在30分鐘內入睡？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ05-Options" id="sleepQ05-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ05-Options" id="sleepQ05-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ05-Options" id="sleepQ05-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ05-Options" id="sleepQ05-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">2-2.半夜或清晨醒來？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ06-Options" id="sleepQ06-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ06-Options" id="sleepQ06-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ06-Options" id="sleepQ06-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ06-Options" id="sleepQ06-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">2-3.需要起床上廁所？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ07-Options" id="sleepQ07-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ07-Options" id="sleepQ07-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ07-Options" id="sleepQ07-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ07-Options" id="sleepQ07-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">2-4.呼吸不順暢？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ08-Options" id="sleepQ08-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ08-Options" id="sleepQ08-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ08-Options" id="sleepQ08-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ08-Options" id="sleepQ08-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">2-5.咳嗽或大聲打鼾？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ09-Options" id="sleepQ09-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ09-Options" id="sleepQ09-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ09-Options" id="sleepQ09-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ09-Options" id="sleepQ09-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">2-6.咳嗽或大聲打鼾？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ10-Options" id="sleepQ10-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ10-Options" id="sleepQ10-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ10-Options" id="sleepQ10-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ10-Options" id="sleepQ10-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">2-7.感覺很冷？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ11-Options" id="sleepQ11-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ11-Options" id="sleepQ11-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ11-Options" id="sleepQ11-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ11-Options" id="sleepQ11-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">2-8.感覺很熱？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ12-Options" id="sleepQ12-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ12-Options" id="sleepQ12-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ12-Options" id="sleepQ12-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ12-Options" id="sleepQ12-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">2-9.作惡夢？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ13-Options" id="sleepQ13-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ13-Options" id="sleepQ13-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ13-Options" id="sleepQ13-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ13-Options" id="sleepQ13-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">2-10.疼痛？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ14-Options" id="sleepQ14-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ14-Options" id="sleepQ14-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ14-Options" id="sleepQ14-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ14-Options" id="sleepQ14-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">2-11.其他？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ15-Options" id="sleepQ15-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ15-Options" id="sleepQ15-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ15-Options" id="sleepQ15-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ15-Options" id="sleepQ15-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <div class="input-group mb-3">
+
+            <div class="input-group-append">
+              <span class="input-group-text" id="sleepQ15text">其他情況說明：</span>
+            </div>
+            <input type="text" class="form-control" placeholder="" aria-label="Recipient's username"
+              aria-describedby="basic-addon2">
+          </div>
+        </div>
+        <div class="modal-body text-black-50 step-5" data-step="5">
+          <h6 style="text-align: left">3-1.過去一個月來，你有多少次需要藉助藥物來幫助睡眠？（醫師處方或成藥）</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ16-Options" id="sleepQ16-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ16-Options" id="sleepQ16-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ16-Options" id="sleepQ16-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ16-Options" id="sleepQ16-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">3-2.過去一個月來，當你在開車、用餐、從事日常社教活動時，有多次有多次覺得難以保持清醒狀態？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ17-Options" id="sleepQ17-1" value="option1"> 重未發生
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ17-Options" id="sleepQ17-2" value="option2">
+              每週少於1次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ17-Options" id="sleepQ17-3" value="option3">
+              每週1~2次
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ17-Options" id="sleepQ17-4" value="option4">
+              每週3次以上
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">3-3.過去一個月來，要打起精神來完成您應該做的事對您有多少困擾？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ18-Options" id="sleepQ18-1" value="option1">
+              完全沒有困擾
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ18-Options" id="sleepQ18-2" value="option2">
+              只有很少困擾
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ18-Options" id="sleepQ18-3" value="option3"> 有些困擾
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ18-Options" id="sleepQ18-4" value="option4">
+              有很大的困擾
+            </label>
+
+          </div>
+          <hr>
+          <h6 style="text-align: left">3-4.過去一個月來，您對您自己的睡眠品質整體評價如何？</h6>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ19-Options" id="sleepQ19-1" value="option1"> 非常好
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ19-Options" id="sleepQ19-2" value="option2"> 好
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ19-Options" id="sleepQ19-3" value="option3"> 不好
+            </label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="sleepQ19-Options" id="sleepQ19-4" value="option4"> 非常不好
+            </label>
+
+          </div>
+        </div>
+        <!--已登入狀態直接跳過-->
+        <div class="modal-body text-black-50 step-6" data-step="1">
+          <div style="text-align: center">
+            <h3>就差一步！<br>SleepHub AI 正在為您推薦適合的音樂</h3>
+            <br>
+            <h6>立即註冊，即可收到 SleepHubAI 推薦的<br>專屬睡眠音樂，享受美好睡眠。</h6>
+            <br>
+            <button type="submit" class="btn btn-primary text-white center">立即註冊</button>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <!--
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                            -->
+          <button type="button" class="btn btn-primary step step-1" data-step="1"
+            onclick="sendEvent('#demo-modal-3', 2)">立即檢測</button>
+          <button type="button" class="btn btn-primary step step-2" data-step="2"
+            onclick="sendEvent('#demo-modal-3', 3)">開始</button>
+          <button type="button" class="btn btn-primary step step-3" data-step="3"
+            onclick="sendEvent('#demo-modal-3', 4)">下一步</button>
+          <button type="button" class="btn btn-primary step step-4" data-step="4"
+            onclick="sendEvent('#demo-modal-3', 3)">上一步</button>
+          <button type="button" class="btn btn-primary step step-4" data-step="4"
+            onclick="sendEvent('#demo-modal-3', 5)">下一步</button>
+          <button type="button" class="btn btn-primary step step-5" data-step="5"
+            onclick="sendEvent('#demo-modal-3', 4)">上一步</button>
+          <!--送出出問卷資料-->
+          <button type="button" class="btn btn-primary step step-5" data-step="5"
+            onclick="sendEvent('#demo-modal-3', 6)">送出</button>
+
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- [4] 推薦音樂彈出問卷 psqi睡眠評估量表 #### -->
+  <!--footer-->
+  <!-- build:js ../assets/js/site.min.js -->
+  <!-- jQuery -->
+  <script src={% static "libs/jquery/dist/jquery.min.js" %}></script>
+  <!-- Bootstrap -->
+  <script src="/static/libs/popper.js/dist/umd/popper.min.js"></script>
+  <script src="/static/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- ajax page -->
+  <script src={% static "libs/pjax/pjax.min.js" %}></script>
+  <script src={% static "assets/js/ajax.js" %}></script>
+  <!-- lazyload plugin -->
+  <script src={% static "assets/js/lazyload.config.js" %}></script>
+  <script src={% static "assets/js/lazyload.js" %}></script>
+  <script src={% static "assets/js/plugin.js" %}></script>
+  <!-- scrollreveal -->
+  <script src={% static "libs/scrollreveal/dist/scrollreveal.min.js" %}></script>
+  <script src={% static "libs/slick-carousel/slick/slick.min.js" %}></script>
+  <!-- feather icons -->
+  <script src={% static "libs/feather-icons/dist/feather.min.js" %}></script>
+  <!-- theme -->
+  <script src={% static "assets/js/theme.js" %}></script>
+  <!-- endbuild -->
+  <script src={% static "multi-step-modal.js" %}></script>
+  <script>
+    sendEvent = function (sel, step) {
+      var sel_event = new CustomEvent('next.m.' + step, { detail: { step: step } });
+      window.dispatchEvent(sel_event);
+    }
+  </script>
+  <script>
+
+    function add_impression(_element) {
+      if ($(_element).hasClass('btn btn-raised btn-icon btn-rounded bg--white btn-play')) {
+        $.ajax({
+          type: "POST",
+          url: "/post/log",
+          data: {
+            userid: $("#userid").val(),
+            music_id: $(_element).val(),
+            sessionid: $("#session_id").val(),
+          },
+          success: function (result) {
+            //alert('ok');
+          },
+          error: function (result) {
+            //alert('error');
+          }
+        });
+      }
+    };
+  </script>
+</body>
+
+</html>

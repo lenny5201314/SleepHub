@@ -1,0 +1,917 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <title>SleepHub | Sleep well with music</title>
+        <meta name="description" content="Responsive, Bootstrap, BS4" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <!-- style -->
+        <!-- build:css ../assets/css/site.min.css -->
+        <link rel="stylesheet" href="{% static "libs/slick-carousel/slick/slick.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "libs/slick-carousel/slick/slick-theme.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "assets/css/bootstrap.css" %}" type="text/css" %}" />
+        <link rel="stylesheet" href="{% static "assets/css/theme.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "assets/css/style.css" %}" type="text/css" />
+        <link rel="icon" type="image/logo" href="{% static "assets/img/icon.png" %}" />
+
+         
+        <!-- endbuild -->
+    </head>
+
+    <!--[1] Header 未登入狀態 -->
+        <!-- [1-1] Navbar Header logo -->
+        <!-- [1-2] Navbar Header collapse 未登入狀態 -->
+    <!--[2] 首頁Banner -->
+        <!--[2-1] 首頁Banner one -->
+        <!--[2-2] 首頁Banner two -->
+    <!--[3] 首頁底部圖片 -->
+    <!--[4] 推薦睡眠問卷 -->
+
+    <body class="layout-column bg-dark">
+        <!-- #### [1] Header 未登入狀態 -->
+        <header id="header" class="page-header fixed">
+            <div class="navbar navbar-expand-lg">
+                <!-- #### [1-1] Navbar Header logo -->
+                
+                <a href="/" class="navbar-brand text-white ">
+                  <!--
+                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" fill="#000"></circle>
+                        <circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1"></circle>
+                        <g class="loading-spin" stroke="currentColor" stroke-width="1" style="transform-origin: 12px 12px">
+                            <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
+                        </g>
+                  </svg>
+                  -->
+                    <img src="/static/assets/img/logo.png" alt="...">
+                        
+                    
+                    <span class="hidden-folded d-inline l-s-n-1x ">SleepHub</span>
+                </a>
+                <!-- [1-1] Navbar Header logo #### -->
+
+                <!-- #### [1-2] Navbar Header collapse 未登入狀態 -->
+                    <div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
+                        <!-- #### 左側 Navbar Header 頁籤-->
+                        <ul class="navbar-nav" data-nav>
+                            <li class="nav-item">
+                                <a href="/genres" class="nav-link">
+                                    <span class="nav-text">尋找</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                    <a href="" class="nav-link no-ajax" data-toggle="modal" data-target="#demo-modal-1">
+                                        <span class="nav-text">推薦音樂</span>
+                                    </a>
+                            </li>
+                            <!-- //
+                            <li class="nav-item">
+                                    <a href="../docs/" class="nav-link no-ajax">
+                                        <span class="nav-text">docs</span>
+                                    </a>
+                            </li>
+                            // -->
+                            
+                        </ul>
+                        <!-- 左側 Navbar Header 頁籤 #### -->
+                    </div>
+                    <!-- #### 右側 Navbar Header 頁籤-->
+                    <ul class="nav navbar-menu order-1 order-lg-2">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link no-ajax" href="/">
+                                歡迎{{ user.username }}
+                            </a>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <a class="btn btn-rounded btn-sm btn-primary no-ajax" href="/logout">
+                                登出
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link no-ajax" href="/signin">
+                                登入
+                            </a>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <a class="btn btn-rounded btn-sm btn-primary no-ajax" href="signup">
+                                註冊
+                            </a>
+                        </li>
+                        <!-- Navarbar toggle btn -->
+                        <li class="nav-item d-lg-none">
+                            <a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse">
+                                <i data-feather="menu"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                    <!-- 右側 Navbar Header 頁籤 #### -->
+                <!-- [1-2] Navbar Header collapse 未登入狀態# ### -->    
+            </div>
+        </header>
+        <!--[1] Header 未登入狀態 #### -->
+
+        <!-- #### [2] 首頁Banner -->
+        <div id="main" class="layout-row flex">
+            <!-- ############ Content START-->
+            <div id="content" class="flex ">
+                <!-- ############ Main START-->
+                <div class="sr">
+                <!-- #### [2-1] 首頁Banner one -->
+                    <div class="page-hero page-container">
+                        <div class="media bg-media">
+                            <div class="media-content" style="background-image:url(static/assets/img/banner.jpg)"></div>
+                        </div>
+                        <div class="p-5 pos-rlt text-center">
+                            <h1 class="display-3 font-weight-bold text-white mb-5 mx-5">聆聽生活中的美妙聲音, 給你一日好眠.</h1>
+                            <a href="/discover" class="btn btn-md gd-primary text-white no-ajax m-2">探索你的音樂</a>
+                            <a href="/genres" class="btn btn-md btn-outline-light m-2">尋找音樂</a>
+                        </div>
+                    </div>
+                <!--[2-1] 首頁Banner one #### -->
+                <!-- #### [2-2] 首頁Banner two -->
+                    <div class="page-container p-5 pos-rlt">
+                        <div class="py-5 text-center">
+                            <h2 class="display-4 font-weight-bold text-white mb-5">Sleep with SleepHub</h2>
+                            <p>SleepHub 相信一首好音樂能幫助有睡眠困擾的你，找回享受睡眠的幸福。</p>
+                            <div class="py-4">
+                                <a href="" class="btn btn-md btn-outline-primary no-ajax m-2" data-toggle="modal" data-target="#demo-modal-1">我需要，快速頻估睡眠</a>
+                                <a href="mailto:sleephub.ncku@gmail.com" class="btn btn-md btn-outline-primary m-2">我需要，深度協助</a>
+                            </div>
+                        </div>
+                    </div>
+                <!--[2-2] 首頁Banner two #### -->
+                <!-- #### [3] 首頁底部圖片 -->
+                    <div class="row no-gutters flex align-items-end">
+                        <div class="col-2">
+                            <div class="row no-gutters align-items-end">
+                                <div class="col-2">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/001.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-10"></div>
+                                <div class="col-8">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/002.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/003.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/004.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/005.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/006.jpg);"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="row no-gutters align-items-end">
+                                <div class="col-3">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/007.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/008.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-7"></div>
+                                <div class="col-12">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/009.jpg);"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="row no-gutters align-items-end">
+                                <div class="col-7">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/010.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/011.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/012.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/013.jpg);"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="row no-gutters align-items-end">
+                                <div class="col-5">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/014.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/015.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/016.jpg);"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="row no-gutters align-items-end">
+                                <div class="col-2"></div>
+                                <div class="col-4">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/017.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/018.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/019.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/020.jpg);"></a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="media">
+                                        <a class="media-content" style="background-image: url(static/assets/img/music/021.jpg);"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [3] 首頁底部圖片 #### -->
+                <!-- ############ Main END-->
+            </div>
+            <!-- ############ Content END-->
+        </div>
+        <!--footer-->
+        <footer id="footer" class="page-footer footer-in-phone">
+            <div class="padding bg-dark  b-t">
+                <div class="page-container">
+                    <div class="py-5 text-inherit text-hover-primary">
+                        <div class="row mb-5">
+                            <div class="col-6 col-md-4">
+                                <div class="mb-3">
+                                    <!-- brand -->
+                                    <a href="/" class="navbar-brand text-white ">
+                                      <!--
+                                        <svg width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" fill="#000"></circle>
+                                            <circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1"></circle>
+                                            <g class="loading-spin" stroke="currentColor" stroke-width="1" style="transform-origin: 12px 12px">
+                                                <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
+                                            </g>
+                                        </svg>
+                                        -->
+                                        <img src="../static/assets/img/logo.png" alt="...">
+                                        <!-- <img src="../assets/img/logo.png" alt="..."> -->
+                                        <span class="hidden-folded d-inline l-s-n-1x ">SleepHub</span>
+                                    </a>
+                                    <!-- / brand -->
+                                </div>
+                                <div class="px-1">
+                                    <div class="dropdown mt-5 ml-md-5">
+                                        <button class="btn w-sm btn-dark text-align-auto b-a sorting" data-toggle="dropdown">繁體中文</button>
+                                        <div class="dropdown-menu">
+                                            <a href="#" class="dropdown-item">繁體中文</a>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-2">
+                                <h5 class="mb-3 text-muted">發現</h5>
+                                <ul class="list-unstyled l-h-2x text-highlight">
+                                    
+                                    <li>
+                                        <a href="/genres">尋找</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">推薦音樂</a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="">通知</a>
+                                    </li>
+                                    <li>
+                                        <a href="/signup">註冊</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-6 col-md-2">
+                                <h5 class="mb-3 text-muted">政策</h5>
+                                <ul class="list-unstyled l-h-2x text-highlight">
+                                    <li>
+                                        <a href="#">問題協助</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">服務條款</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">隱私權</a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                            <div class="col-6 col-md-2">
+                                <h5 class="mb-3 text-muted">關於</h5>
+                                <ul class="list-unstyled l-h-2x text-highlight">
+                                    <li>
+                                        <a href="../html/page.about.html">關於我們</a>
+                                    </li>
+                                    <li>
+                                        <a href="../html/blog.html">部落格</a>
+                                    </li>
+                                    <li>
+                                        <a href="../docs">Documentation</a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="../docs/changelog.html">Update</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                        </div>
+                        <div class="text-center py-5">
+                            <span class="text-muted text-sm">&copy; Copyright. SleepHub - Sleep well with music, All rights reserved.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--footer-->
+            
+                    <!-- #### [4] 推薦音樂彈出問卷 psqi睡眠評估量表-->
+                    <form class="modal multi-step" id="demo-modal-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" style="background-color:#fff">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-black-50 step-1" data-step="1"></h4>
+                                    <h4 class="modal-title text-black-50 step-2" data-step="2">問卷說明</h4>
+                                    <h4 class="modal-title text-black-50 step-3" data-step="3">1.</h4>
+                                    <h4 class="modal-title text-black-50 step-4" data-step="4">2.</h4>
+                                    <h4 class="modal-title text-black-50 step-5" data-step="5">3.</h4>
+                                    <h4 class="modal-title text-black-50 step-6" data-step="6"></h4>
+                                    <button type="button" class="close" style="color: #333333" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    
+                                </div>
+                                <div class="modal-body text-black-50 step-1" data-step="1">
+                                    <div style="text-align: center">
+                                        <h3>快速檢測睡眠，找到適合自己的音樂</h3>
+                                        <p>完成問卷，SleepHub AI 將會推薦最適合的睡眠音樂給您</p>
+                                    </div>
+                                </div>
+                                <div class="modal-body text-black-50 step-2" data-step="2">
+                                        <div style="text-align: center">
+                                                
+                                                <h4>本問卷使用批匹茲堡睡眠品質量表</h4>
+                                                <h6>下列問題是要調查您過去”這一個月“的睡眠<br>習慣，請您以平均狀況回答。</h6>
+                                                <p>點選“開始”，即表示同意 隱私條款</p>
+                                        </div>               
+                                </div>
+                                <div class="modal-body text-black-50 step-3" data-step="3">
+                                    <div >
+                                        <h6 style="text-align: left">1-1.過去一個月來，您晚上通常幾點何時上床？</h6>
+                                        
+                                        <div class="form-group row">
+                                                <label for="example-time-input" class="col-form-label"></label>
+                                                <div class="col-10">
+                                                  <input class="form-control" type="time" value="22:30:00" id="example-time-input">
+                                                </div>
+                                        </div>
+                                        
+                                        <h6 style="text-align: left">1-2.過去一個月來，您在上床後，通常躺多久才能日入睡？</h6>
+                                        
+                                        
+                                                <div class="input-group mb-3">
+                                                       
+                                                        <select class="custom-select" id="inputGroupSelect02">
+                                                                <option>10</option>
+                                                                <option>15</option>
+                                                                <option>20</option>
+                                                                <option>25</option>
+                                                                <option>30</option>
+                                                                <option>35</option>
+                                                                <option>40</option>
+                                                                <option>45</option>
+                                                                <option>50</option>
+                                                                <option>55</option>
+                                                        </select>
+                                                        <div class="input-group-append">
+                                                                <label class="input-group-text" for="inputGroupSelect02">分鐘</label>
+                                                        </div>
+                                                </div>
+                                            
+                                               
+                                        
+
+                                        <h6 style="text-align: left">1-3.過去一個月來，您早上通常幾點起床？</h6>
+                                        
+                                        <div class="form-group row ">
+                                                <label for="example-time-input" class="col-form-label"></label>
+                                                <div class="col-10">
+                                                  <input class="form-control" type="time" value="07:30:00" id="example-time-input">
+                                                </div>
+                                        </div>
+                                        <h6 style="text-align: left">1-4.過去一個月來，您每天晚上真正睡著的時間約多少？</h6>
+                                        
+                                        <form class="form-inline">
+                                                <div class="input-group mb-3">
+                                                        <select class="custom-select" id="inputGroupSelect01">
+                                                                <option>不到 1</option>
+                                                                <option>1 </option>
+                                                                <option>2 </option>
+                                                                <option>3 </option>
+                                                                <option>4 </option>
+                                                                <option>5 </option>
+                                                                <option>6 </option>
+                                                                <option>7 </option>
+                                                                <option>8 </option>
+                                                                <option>9 </option>
+                                                                <option>10 </option>
+                                                                <option>11 </option>
+                                                                <option>12 </option>
+                                                                <option>13 </option>
+                                                                <option>14 </option>
+                                                                <option>15 </option>
+                                                                <option>大於 16</option>
+                                                                
+                                                        </select>
+                                                        <div class="input-group-append">
+                                                          <label class="input-group-text" for="inputGroupSelect01">小時</label>
+                                                        </div>
+                                                        <select class="custom-select" id="inputGroupSelect02">
+                                                                <option>10</option>
+                                                                <option>20</option>
+                                                                <option>30</option>
+                                                                <option>40</option>
+                                                                <option>50</option>
+                                                        </select>
+                                                        <div class="input-group-append">
+                                                                <label class="input-group-text" for="inputGroupSelect02">分鐘</label>
+                                                        </div>
+                                                </div>
+                                            
+                                               
+                                        </form>
+                                    </div>          
+                                                
+                                        
+                                </div>
+                                <div class="modal-body text-black-50 step-4" data-step="4">
+                                        <h6 style="text-align: left">2-1.無法在30分鐘內入睡？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ05-Options" id="sleepQ05-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ05-Options" id="sleepQ05-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ05-Options" id="sleepQ05-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ05-Options" id="sleepQ05-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">2-2.半夜或清晨醒來？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ06-Options" id="sleepQ06-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ06-Options" id="sleepQ06-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ06-Options" id="sleepQ06-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ06-Options" id="sleepQ06-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">2-3.需要起床上廁所？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ07-Options" id="sleepQ07-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ07-Options" id="sleepQ07-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ07-Options" id="sleepQ07-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ07-Options" id="sleepQ07-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">2-4.呼吸不順暢？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ08-Options" id="sleepQ08-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ08-Options" id="sleepQ08-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ08-Options" id="sleepQ08-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ08-Options" id="sleepQ08-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">2-5.咳嗽或大聲打鼾？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ09-Options" id="sleepQ09-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ09-Options" id="sleepQ09-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ09-Options" id="sleepQ09-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ09-Options" id="sleepQ09-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">2-6.咳嗽或大聲打鼾？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ10-Options" id="sleepQ10-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ10-Options" id="sleepQ10-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ10-Options" id="sleepQ10-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ10-Options" id="sleepQ10-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">2-7.感覺很冷？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ11-Options" id="sleepQ11-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ11-Options" id="sleepQ11-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ11-Options" id="sleepQ11-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ11-Options" id="sleepQ11-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">2-8.感覺很熱？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ12-Options" id="sleepQ12-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ12-Options" id="sleepQ12-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ12-Options" id="sleepQ12-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ12-Options" id="sleepQ12-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">2-9.作惡夢？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ13-Options" id="sleepQ13-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ13-Options" id="sleepQ13-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ13-Options" id="sleepQ13-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ13-Options" id="sleepQ13-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">2-10.疼痛？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ14-Options" id="sleepQ14-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ14-Options" id="sleepQ14-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ14-Options" id="sleepQ14-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ14-Options" id="sleepQ14-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">2-11.其他？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ15-Options" id="sleepQ15-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ15-Options" id="sleepQ15-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ15-Options" id="sleepQ15-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ15-Options" id="sleepQ15-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <div class="input-group mb-3">
+                                                
+                                                <div class="input-group-append">
+                                                  <span class="input-group-text" id="sleepQ15text">其他情況說明：</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        </div>
+                                </div>
+                                <div class="modal-body text-black-50 step-5" data-step="5">
+                                        <h6 style="text-align: left">3-1.過去一個月來，你有多少次需要藉助藥物來幫助睡眠？（醫師處方或成藥）</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ16-Options" id="sleepQ16-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ16-Options" id="sleepQ16-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ16-Options" id="sleepQ16-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ16-Options" id="sleepQ16-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">3-2.過去一個月來，當你在開車、用餐、從事日常社教活動時，有多次有多次覺得難以保持清醒狀態？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ17-Options" id="sleepQ17-1" value="option1"> 重未發生
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ17-Options" id="sleepQ17-2" value="option2"> 每週少於1次
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ17-Options" id="sleepQ17-3" value="option3"> 每週1~2次
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ17-Options" id="sleepQ17-4" value="option4"> 每週3次以上
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">3-3.過去一個月來，要打起精神來完成您應該做的事對您有多少困擾？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ18-Options" id="sleepQ18-1" value="option1"> 完全沒有困擾
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ18-Options" id="sleepQ18-2" value="option2"> 只有很少困擾
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ18-Options" id="sleepQ18-3" value="option3"> 有些困擾
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ18-Options" id="sleepQ18-4" value="option4"> 有很大的困擾
+                                                </label>
+                                            
+                                        </div>
+                                        <hr>
+                                        <h6 style="text-align: left">3-4.過去一個月來，您對您自己的睡眠品質整體評價如何？</h6>
+                                        <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ19-Options" id="sleepQ19-1" value="option1"> 非常好
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ19-Options" id="sleepQ19-2" value="option2"> 好
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ19-Options" id="sleepQ19-3" value="option3"> 不好
+                                                </label>
+                                            </div>  
+                                              <div class="form-check form-check-inline ">
+                                                <label class="form-check-label">
+                                                  <input class="form-check-input" type="radio" name="sleepQ19-Options" id="sleepQ19-4" value="option4"> 非常不好
+                                                </label>
+                                            
+                                        </div>
+                                    </div>
+                                    <!--已登入狀態直接跳過-->
+                                    {% if user.is_authenticated %}
+                                    {% else%}
+                                    <div class="modal-body text-black-50 step-6" data-step="1">
+                                            <div style="text-align: center">
+                                                <h3>就差一步！<br>SleepHub AI 正在為您推薦適合的音樂</h3>
+                                                <br>
+                                                <h6>立即註冊，即可收到 SleepHubAI 推薦的<br>專屬睡眠音樂，享受美好睡眠。</h6>
+                                                <br>
+                                                <button type="submit" class="btn btn-primary text-white center" herf="/signup" >立即註冊</button>
+                                            </div>
+                                            
+                                    </div>
+                                    {% endif %}
+                                <div class="modal-footer">
+                                    <!--
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                                    -->
+                                    <button type="button" class="btn btn-primary step step-1" data-step="1" onclick="sendEvent('#demo-modal-3', 2)">立即檢測</button>
+                                    <button type="button" class="btn btn-primary step step-2" data-step="2" onclick="sendEvent('#demo-modal-3', 3)">開始</button>
+                                    <button type="button" class="btn btn-primary step step-3" data-step="3" onclick="sendEvent('#demo-modal-3', 4)">下一步</button>
+                                    <button type="button" class="btn btn-primary step step-4" data-step="4" onclick="sendEvent('#demo-modal-3', 3)">上一步</button>
+                                    <button type="button" class="btn btn-primary step step-4" data-step="4" onclick="sendEvent('#demo-modal-3', 5)">下一步</button>
+                                    <button type="button" class="btn btn-primary step step-5" data-step="5" onclick="sendEvent('#demo-modal-3', 4)">上一步</button>
+                                    <!--送出出問卷資料-->
+                                    <button type="button" class="btn btn-primary step step-5" data-step="5" onclick="sendEvent('#demo-modal-3', 6)">送出</button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- [4] 推薦音樂彈出問卷 psqi睡眠評估量表 #### -->
+        
+        <!-- build:js ../assets/js/site.min.js -->
+        <!-- jQuery -->
+        <script src={% static "libs/jquery/dist/jquery.min.js" %}></script>
+        <!-- Bootstrap -->
+        <script src={% static "libs/popper.js/dist/umd/popper.min.js" %}></script>
+        <script src={% static "libs/bootstrap/dist/js/bootstrap.min.js" %}></script>
+        <!-- ajax page -->
+        <script src={% static "libs/pjax/pjax.min.js" %}></script>
+        <script src={% static "assets/js/ajax.js" %}></script>
+        <!-- lazyload plugin -->
+        <script src={% static "assets/js/lazyload.config.js" %}></script>
+        <script src={% static "assets/js/lazyload.js" %}></script>
+        <script src={% static "assets/js/plugin.js" %}></script>
+        <!-- scrollreveal -->
+        <script src={% static "libs/scrollreveal/dist/scrollreveal.min.js" %}></script>
+        <script src={% static "libs/slick-carousel/slick/slick.min.js" %}></script>
+        <!-- feather icons -->
+        <script src={% static "libs/feather-icons/dist/feather.min.js" %}></script>
+        <!-- theme -->
+        <script src={% static "assets/js/theme.js" %}></script>
+        <!-- endbuild -->
+        <script src={% static "multi-step-modal.js" %}></script>
+        <script>
+        sendEvent = function(sel, step) {
+            var sel_event = new CustomEvent('next.m.' + step, {detail: {step: step}});
+            window.dispatchEvent(sel_event);
+        }
+        </script>
+    </body>
+</html>

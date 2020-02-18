@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <title>註冊 | SleepHub - Sleep well with music</title>
+        <meta name="description" content="Responsive, Bootstrap, BS4" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <!-- style -->
+        <!-- build:css ../assets/css/site.min.css -->
+        <link rel="stylesheet" href="{% static "libs/slick-carousel/slick/slick.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "libs/slick-carousel/slick/slick-theme.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "assets/css/bootstrap.css" %}" type="text/css" %}" />
+        <link rel="stylesheet" href="{% static "assets/css/theme.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "assets/css/style.css" %}" type="text/css" />
+        <!-- endbuild -->
+    </head>
+
+    <!--[1] 左側banner -->
+    <!--[2] 右側註冊表單  -->
+   
+
+
+    <body class="layout-row bg-dark">
+        <div class="d-flex flex-column flex">
+            <div class="row no-gutters h-100">
+                <!-- #### [1] 左側banner -->
+                <div class="col-md-6 bg-dark bg-img" style="background-image:url(/static/assets/img/nb4.jpg)">
+                    <div class="p-3 p-md-5 d-flex flex-column h-100">
+                        <h4 class="mb-3 text-white">SleepHub</h4>
+                        <div class="text-fade">Sleep well with music</div>
+                        <div class="d-flex flex align-items-center justify-content-center">
+                        </div>
+                        <div class="d-flex text-sm text-fade">
+                            <a href="" class="text-white"></a>
+                            <span class="flex"></span>
+                            <a href="genres.html" class="text-white mx-1">尋找</a>
+                            <a href="#" class="text-white mx-1">音樂推薦</a>
+                        </div>
+                    </div>
+                </div>
+                <!--[1] 左側banner #### -->
+                <!-- #### [2] 右側註冊表單  -->
+                <div class="col-md-6" id="content-body">
+                    <div class="p-3 p-md-5">
+                        <h5>歡迎來到 SleepHub</h5>
+                        <div class="">
+                                {% if registered %}
+                            <h1>感謝您的註冊!</h1>
+                              {% else %}
+
+                            <form enctype="multipart/form-data" method="POST">
+                                
+                                <div class="my-3 text-muted text-sm text-muted">
+                                    使用電子郵件註冊
+                                </div>
+                                {% csrf_token %}
+                                {{ user_form.as_p }}
+                                {{ profile_form.as_p}}
+                                <input type="submit" name="" value="立即註冊" class="btn btn-primary mb-4">
+                            </form>
+                                <div class="mb-3 text-sm">
+                                    <span class="text-muted">點選註冊，即表示同意</span>
+                                    <a href="#">服務條款</a>
+                                </div>
+                                {% endif %}
+                                <div>已經是會員了嗎？
+                                    <a href="/signin" class="text-primary _600">登入</a>
+                                </div>
+                             
+                                <div class="text-right">
+                                    <a href="/" class="btn btn-md btn-outline-light m-2">返回首頁</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- [2] 右側註冊表單 #### -->
+            </div>
+        </div>
+        <!-- build:js ../assets/js/site.min.js -->
+        <!-- jQuery -->
+        <script src="../libs/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="../libs/popper.js/dist/umd/popper.min.js"></script>
+        <script src="../libs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- ajax page -->
+        <script src="../libs/pjax/pjax.min.js"></script>
+        <script src="../assets/js/ajax.js"></script>
+        <!-- lazyload plugin -->
+        <script src="../assets/js/lazyload.config.js"></script>
+        <script src="../assets/js/lazyload.js"></script>
+        <script src="../assets/js/plugin.js"></script>
+        <!-- scrollreveal -->
+        <script src="../libs/scrollreveal/dist/scrollreveal.min.js"></script>
+        <script src="../libs/slick-carousel/slick/slick.min.js"></script>
+        <!-- feather icons -->
+        <script src="../libs/feather-icons/dist/feather.min.js"></script>
+        <!-- theme -->
+        <script src="../assets/js/theme.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>

@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <title>登入 | SleepHub - Sleep well with music</title>
+        <meta name="description" content="Responsive, Bootstrap, BS4" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <!-- style -->
+        <!-- build:css ../assets/css/site.min.css -->
+        <link rel="stylesheet" href="{% static "libs/slick-carousel/slick/slick.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "libs/slick-carousel/slick/slick-theme.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "assets/css/bootstrap.css" %}" type="text/css" %}" />
+        <link rel="stylesheet" href="{% static "assets/css/theme.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "assets/css/style.css" %}" type="text/css" />
+        <link rel="icon" type="image/logo" href="{% static "assets/img/icon.png" %}" />
+        <!-- endbuild -->
+    </head>
+
+    <!--[1] 左側banner -->
+    <!--[2] 右側註冊表單  -->
+
+
+    <body class="layout-row bg-dark">
+        <div class="d-flex flex-column flex">
+            <div class="row no-gutters h-100">
+                <!-- #### [1] 左側banner -->
+                <div class="col-md-6 bg-dark bg-img" style="background-image:url(/static/assets/img/nb3.jpg)">
+                    <div class="p-3 p-md-5 d-flex flex-column h-100">
+                        <h4 class="mb-3 text-white">SleepHub</h4>S
+                        <div class="text-fade">Sleep well with music</div>
+                        <div class="d-flex flex align-items-center justify-content-center">
+                        </div>
+                        <div class="d-flex text-sm text-fade">
+                                <a href="" class="text-white"></a>
+                                <span class="flex"></span>
+                                <a href="genres.html" class="text-white mx-1">尋找</a>
+                                <a href="#" class="text-white mx-1">音樂推薦</a>
+                        </div>
+                    </div>
+                </div>
+                <!--[1] 左側banner #### -->
+                <!-- #### [2] 右側註冊表單  -->
+                <div class="col-md-6" id="content-body">
+                    <div class="p-3 p-md-5">
+                        <h5>歡迎回來</h5>
+                        <p>
+                            <small class="text-muted">登入來管理您的睡眠與音樂</small>
+                        </p>
+                        <form class="" role="form" action="{% url 'signin' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>電子郵件</label>
+                                <input type="email" name="email" class="form-control" placeholder="請輸入信箱">
+                            </div>
+                            <div class="form-group">
+                                <label>密碼</label>
+                                <input type="password" name="password" class="form-control" placeholder="請輸入密碼">
+                                <div class="my-3 text-right">
+                                    <a href="mailto:sleephub.ncku@gmail.com" class="text-muted">忘記密碼？</a>
+                                </div>
+                            </div>
+                            <div class="checkbox mb-3">
+                                <label class="ui-check">
+                                    <input type="checkbox">
+                                    <i></i> 記住我
+                                </label>
+                            </div>
+                            <input type="submit" name="" value="登入" class="btn btn-primary mb-4">
+                            <div>還不是會員嗎？
+                                <a href="/signup" class="text-primary">免費註冊</a>
+                            </div>
+                            <br>
+                            <div class="text-right">
+                              <a href="/" class="btn btn-md btn-outline-light m-2">返回首頁</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--[2] 右側註冊表單  #### -->
+            </div>
+        </div>
+        <!-- build:js ../assets/js/site.min.js -->
+        <!-- jQuery -->
+        <script src={% static "libs/jquery/dist/jquery.min.js" %}></script>
+        <!-- Bootstrap -->
+        <script src={% static "libs/popper.js/dist/umd/popper.min.js" %}></script>
+        <script src={% static "libs/bootstrap/dist/js/bootstrap.min.js" %}></script>
+        <!-- ajax page -->
+        <script src={% static "libs/pjax/pjax.min.js" %}></script>
+        <script src={% static "assets/js/ajax.js" %}></script>
+        <!-- lazyload plugin -->
+        <script src={% static "assets/js/lazyload.config.js" %}></script>
+        <script src={% static "assets/js/lazyload.js" %}></script>
+        <script src={% static "assets/js/plugin.js" %}></script>
+        <!-- scrollreveal -->
+        <script src={% static "libs/scrollreveal/dist/scrollreveal.min.js" %}></script>
+        <script src={% static "libs/slick-carousel/slick/slick.min.js" %}></script>
+        <!-- feather icons -->
+        <script src={% static "libs/feather-icons/dist/feather.min.js" %}></script>
+        <!-- theme -->
+        <script src={% static "assets/js/theme.js" %}></script>
+        <!-- endbuild -->
+    </body>
+</html>
